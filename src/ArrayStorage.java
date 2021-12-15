@@ -23,11 +23,7 @@ public class ArrayStorage {
                     break;
                 }
             }
-        } else try {
-            throw new Exception("В массиве нет свободного места");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } else System.out.println("В массиве нет свободного места");
     }
 
     Resume get(String uuid) {
@@ -54,11 +50,7 @@ public class ArrayStorage {
                 storage[i] = storage[i + 1];
             }
             storage[storage.length - 1] = null;
-        } else try {
-            throw new Exception("В массиве отсутствует данный элемент");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } else System.out.println("Резюме с данным uuid отсутствует");
     }
 
     /**
@@ -69,6 +61,12 @@ public class ArrayStorage {
     }
 
     int size() {
-        return storage.length;
+        int counter = 0;
+        for (Resume r : storage) {
+            if (r != null) {
+                counter++;
+            } else break;
+        }
+        return counter;
     }
 }
