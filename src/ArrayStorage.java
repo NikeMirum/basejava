@@ -6,6 +6,7 @@ import java.util.Objects;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    int size = 0;
 
     void clear() {
         for (int i = 0; i < storage.length; i++) {
@@ -13,6 +14,7 @@ public class ArrayStorage {
                 storage[i] = null;
             } else break;
         }
+        size = 0;
     }
 
     void save(Resume r) {
@@ -20,6 +22,7 @@ public class ArrayStorage {
             for (int i = 0; i < storage.length - 1; i++) {
                 if (storage[i] == null) {
                     storage[i] = r;
+                    size++;
                     break;
                 }
             }
@@ -50,6 +53,7 @@ public class ArrayStorage {
                 storage[i] = storage[i + 1];
             }
             storage[storage.length - 1] = null;
+            size--;
         } else System.out.println("Резюме с данным uuid отсутствует");
     }
 
@@ -61,12 +65,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int counter = 0;
-        for (Resume r : storage) {
-            if (r != null) {
-                counter++;
-            } else break;
-        }
-        return counter;
+        return size;
     }
 }
