@@ -12,49 +12,40 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, (size - 1), null);
         size = 0;
     }
 
     public void update(Resume r) {
-        if (checkIfResumePresentByUuid(r.getUuid())) {
+        if (indexOfResumeInStorage(r.getUuid()) != -1) {
             storage[indexOfResumeInStorage(r.getUuid())] = r;
-        } else System.out.println("ERROR: There is no Resume to update");
+        } else System.out.printf("ERROR: There is no such Resume with uuid %s to update%n", r.getUuid());
     }
 
     public void save(Resume r) {
-        if (!checkIfResumePresentByUuid(r.getUuid())) {
-            if (size < 10000) {
+        if (indexOfResumeInStorage(r.getUuid()) == -1) {
+            if (size < storage.length) {
                 storage[size] = r;
                 size++;
             } else System.out.println("ERROR: No space in ArrayStorage!");
-        } else System.out.println("ERROR: Resume with this uuid already exist");
+        } else System.out.printf("ERROR: Resume with uuid %s already exist", r.getUuid());
 
     }
 
     public Resume get(String uuid) {
-        if (checkIfResumePresentByUuid(uuid)) {
+        if (indexOfResumeInStorage(uuid) != -1) {
             return storage[indexOfResumeInStorage(uuid)];
         }
-        System.out.println("ERROR: No such Resume found");
+        System.out.printf("ERROR: No Resume with uuid %s found%n", uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        int delIndex = -1;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                delIndex = i;
-                break;
-            }
-        }
-        if (delIndex != -1) {
-            for (int i = delIndex; i < size - 1; i++) {
-                storage[i] = storage[i + 1];
-            }
+        if (indexOfResumeInStorage(uuid) != -1) {
+            storage[indexOfResumeInStorage(uuid)] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-        } else System.out.println("ERROR: No Resume with certain ID found");
+        } else System.out.printf("ERROR: No Resume with uuid %s found", uuid);
     }
 
     /**
@@ -68,21 +59,12 @@ public class ArrayStorage {
         return size;
     }
 
-    public boolean checkIfResumePresentByUuid(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Integer indexOfResumeInStorage(String uuid) {
+    public int indexOfResumeInStorage(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 }
