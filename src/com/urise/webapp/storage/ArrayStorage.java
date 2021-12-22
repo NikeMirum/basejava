@@ -19,7 +19,7 @@ public class ArrayStorage {
     public void update(Resume r) {
         if (indexOfResumeInStorage(r.getUuid()) != -1) {
             storage[indexOfResumeInStorage(r.getUuid())] = r;
-        } else System.out.printf("ERROR: There is no such Resume with uuid %s to update%n", r.getUuid());
+        } else System.out.printf("ERROR: There is no similar Resume with uuid %s to update", r.getUuid());
     }
 
     public void save(Resume r) {
@@ -36,7 +36,7 @@ public class ArrayStorage {
         if (indexOfResumeInStorage(uuid) != -1) {
             return storage[indexOfResumeInStorage(uuid)];
         }
-        System.out.printf("ERROR: No Resume with uuid %s found%n", uuid);
+        System.out.printf("ERROR: No Resume with uuid %s found", uuid);
         return null;
     }
 
