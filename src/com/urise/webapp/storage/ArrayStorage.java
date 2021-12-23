@@ -9,21 +9,22 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
     private Resume[] storage = new Resume[10000];
-    private int size = 0;
+    private int size;
 
     public void clear() {
-        Arrays.fill(storage, 0, (size - 1), null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void update(Resume r) {
-        if (indexOfResumeInStorage(r.getUuid()) != -1) {
-            storage[indexOfResumeInStorage(r.getUuid())] = r;
+        int index = findIndex(r.getUuid());
+        if (index != -1) {
+            storage[index] = r;
         } else System.out.printf("ERROR: There is no similar Resume with uuid %s to update", r.getUuid());
     }
 
     public void save(Resume r) {
-        if (indexOfResumeInStorage(r.getUuid()) == -1) {
+        if (findIndex(r.getUuid()) == -1) {
             if (size < storage.length) {
                 storage[size] = r;
                 size++;
@@ -33,16 +34,18 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (indexOfResumeInStorage(uuid) != -1) {
-            return storage[indexOfResumeInStorage(uuid)];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         }
         System.out.printf("ERROR: No Resume with uuid %s found", uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        if (indexOfResumeInStorage(uuid) != -1) {
-            storage[indexOfResumeInStorage(uuid)] = storage[size - 1];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else System.out.printf("ERROR: No Resume with uuid %s found", uuid);
@@ -59,7 +62,7 @@ public class ArrayStorage {
         return size;
     }
 
-    public int indexOfResumeInStorage(String uuid) {
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
