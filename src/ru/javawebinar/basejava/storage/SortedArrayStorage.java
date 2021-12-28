@@ -22,7 +22,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void reorganizingStorageAfterDelete(int index) {
+    protected void fillDeletedElement(int index) {
         int shift = size - index - 1;
         if (shift > 0) {
             System.arraycopy(storage, index + 1, storage, index, shift);

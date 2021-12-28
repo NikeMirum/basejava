@@ -48,7 +48,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index == -1) {
             System.out.println("Resume " + uuid + " not exist");
         } else {
-            reorganizingStorageAfterDelete(index);
+            fillDeletedElement(index);
             storage[size - 1] = null;
             size--;
         }
@@ -71,5 +71,5 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void putResumeInStorage(Resume r, int index);
 
-    protected abstract void reorganizingStorageAfterDelete(int index);
+    protected abstract void fillDeletedElement(int index);
 }
