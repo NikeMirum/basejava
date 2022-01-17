@@ -5,8 +5,6 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    public abstract void clear();
-
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index < 0) {
