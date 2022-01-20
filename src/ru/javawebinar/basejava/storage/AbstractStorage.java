@@ -4,46 +4,53 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<IK> implements Storage {
     public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        }
+        IK index = getIndexOrKeyIfExist(r.getUuid());
         updateElement(index, r);
     }
 
     public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
-        addElement(r, index);
+        IK index = getIndexOrKeyIfNotExist(r.getUuid());
+        addElement(index, r);
     }
 
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+        IK index = getIndexOrKeyIfExist(uuid);
         deleteElement(index);
     }
 
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+        IK index = getIndexOrKeyIfExist(uuid);
         return getElement(index);
     }
 
-    protected abstract int getIndex(String uuid);
 
-    protected abstract void updateElement(int index, Resume r);
+    protected IK getIndexOrKeyIfExist(String uuid) {
+        IK getIndexOrKey = getIndexOrKey(uuid);
+        if (!isIndexOrKeyExist(getIndexOrKey)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return getIndexOrKey(uuid);
+    }
 
-    protected abstract void addElement(Resume r, int index);
+    protected IK getIndexOrKeyIfNotExist(String uuid) {
+        IK getIndexOrKey = getIndexOrKey(uuid);
+        if (isIndexOrKeyExist(getIndexOrKey)) {
+            throw new ExistStorageException(uuid);
+        }
+        return getIndexOrKey(uuid);
+    }
 
-    protected abstract void deleteElement(int index);
+    protected abstract boolean isIndexOrKeyExist(IK indexOrKey);
 
-    protected abstract Resume getElement(int index);
+    protected abstract IK getIndexOrKey(String uuid);
+
+    protected abstract void updateElement(IK indexOrKey, Resume r);
+
+    protected abstract void addElement(IK indexOrKey, Resume r);
+
+    protected abstract void deleteElement(IK indexOrKey);
+
+    protected abstract Resume getElement(IK indexOrKey);
 }
