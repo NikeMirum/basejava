@@ -57,8 +57,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean isIndexOrKeyExist(Integer indexOrKey) {
-        return indexOrKey >= 0;
+    protected boolean isSearchKeyExist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract void fillDeletedElement(Integer index);

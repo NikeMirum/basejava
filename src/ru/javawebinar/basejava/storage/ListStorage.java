@@ -24,7 +24,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Integer getIndexOrKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid);
         return storage.indexOf(searchKey);
     }
@@ -50,7 +50,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean isIndexOrKeyExist(Integer index) {
+    protected boolean isSearchKeyExist(Integer index) {
         return index != -1;
     }
 }

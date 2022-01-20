@@ -4,53 +4,53 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractStorage<IK> implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
     public void update(Resume r) {
-        IK index = getIndexOrKeyIfExist(r.getUuid());
+        SK index = getSearchKeyIfExist(r.getUuid());
         updateElement(index, r);
     }
 
     public void save(Resume r) {
-        IK index = getIndexOrKeyIfNotExist(r.getUuid());
+        SK index = getSearchKeyIfNotExist(r.getUuid());
         addElement(index, r);
     }
 
     public void delete(String uuid) {
-        IK index = getIndexOrKeyIfExist(uuid);
+        SK index = getSearchKeyIfExist(uuid);
         deleteElement(index);
     }
 
     public Resume get(String uuid) {
-        IK index = getIndexOrKeyIfExist(uuid);
+        SK index = getSearchKeyIfExist(uuid);
         return getElement(index);
     }
 
 
-    protected IK getIndexOrKeyIfExist(String uuid) {
-        IK getIndexOrKey = getIndexOrKey(uuid);
-        if (!isIndexOrKeyExist(getIndexOrKey)) {
+    protected SK getSearchKeyIfExist(String uuid) {
+        SK getSearchKey = getSearchKey(uuid);
+        if (!isSearchKeyExist(getSearchKey)) {
             throw new NotExistStorageException(uuid);
         }
-        return getIndexOrKey(uuid);
+        return getSearchKey(uuid);
     }
 
-    protected IK getIndexOrKeyIfNotExist(String uuid) {
-        IK getIndexOrKey = getIndexOrKey(uuid);
-        if (isIndexOrKeyExist(getIndexOrKey)) {
+    protected SK getSearchKeyIfNotExist(String uuid) {
+        SK getSearchKey = getSearchKey(uuid);
+        if (isSearchKeyExist(getSearchKey)) {
             throw new ExistStorageException(uuid);
         }
-        return getIndexOrKey(uuid);
+        return getSearchKey(uuid);
     }
 
-    protected abstract boolean isIndexOrKeyExist(IK indexOrKey);
+    protected abstract boolean isSearchKeyExist(SK searchKey);
 
-    protected abstract IK getIndexOrKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
-    protected abstract void updateElement(IK indexOrKey, Resume r);
+    protected abstract void updateElement(SK searchKey, Resume r);
 
-    protected abstract void addElement(IK indexOrKey, Resume r);
+    protected abstract void addElement(SK searchKey, Resume r);
 
-    protected abstract void deleteElement(IK indexOrKey);
+    protected abstract void deleteElement(SK searchKey);
 
-    protected abstract Resume getElement(IK indexOrKey);
+    protected abstract Resume getElement(SK searchKey);
 }

@@ -2,12 +2,11 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class MapStorage extends AbstractStorage<String> {
-    private Map<String, Resume> storage = new HashMap();
+    private Map<String, Resume> storage = new TreeMap<>();
 
     public void clear() {
         storage.clear();
@@ -15,9 +14,7 @@ public class MapStorage extends AbstractStorage<String> {
 
     @Override
     public Resume[] getAll() {
-        Resume[] resumes = storage.values().toArray(new Resume[0]);
-        Arrays.sort(resumes);
-        return resumes;
+        return storage.values().toArray(new Resume[0]);
     }
 
     @Override
@@ -26,33 +23,33 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean isIndexOrKeyExist(String key) {
-        return storage.containsKey(key);
+    protected boolean isSearchKeyExist(String searchKey) {
+        return storage.containsKey(searchKey);
     }
 
     @Override
-    protected String getIndexOrKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         return uuid;
     }
 
     @Override
-    protected void updateElement(String key, Resume r) {
-        storage.put(key, r);
+    protected void updateElement(String searchKey, Resume r) {
+        storage.put(searchKey, r);
     }
 
     @Override
-    protected void addElement(String key, Resume r) {
-        storage.put(key, r);
+    protected void addElement(String searchKey, Resume r) {
+        storage.put(searchKey, r);
     }
 
     @Override
-    protected void deleteElement(String key) {
-        storage.remove(key);
+    protected void deleteElement(String searchKey) {
+        storage.remove(searchKey);
     }
 
     @Override
-    protected Resume getElement(String key) {
-        return storage.get(key);
+    protected Resume getElement(String searchKey) {
+        return storage.get(searchKey);
     }
 
 }
