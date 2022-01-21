@@ -6,23 +6,23 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage<SK> implements Storage {
     public void update(Resume r) {
-        SK index = getSearchKeyIfExist(r.getUuid());
-        updateElement(index, r);
+        SK searchKey = getSearchKeyIfExist(r.getUuid());
+        updateElement(searchKey, r);
     }
 
     public void save(Resume r) {
-        SK index = getSearchKeyIfNotExist(r.getUuid());
-        addElement(index, r);
+        SK searchKey = getSearchKeyIfNotExist(r.getUuid());
+        addElement(searchKey, r);
     }
 
     public void delete(String uuid) {
-        SK index = getSearchKeyIfExist(uuid);
-        deleteElement(index);
+        SK searchKey = getSearchKeyIfExist(uuid);
+        deleteElement(searchKey);
     }
 
     public Resume get(String uuid) {
-        SK index = getSearchKeyIfExist(uuid);
-        return getElement(index);
+        SK searchKey = getSearchKeyIfExist(uuid);
+        return getElement(searchKey);
     }
 
 
