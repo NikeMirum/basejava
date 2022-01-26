@@ -6,7 +6,11 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -21,15 +25,15 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_3;
     private static final Resume RESUME_4;
 
-    private static Resume[] RESUMES;
+    private static List<Resume> RESUMES;
 
     static {
-        RESUME_1 = new Resume(UUID_1);
-        RESUME_2 = new Resume(UUID_2);
-        RESUME_3 = new Resume(UUID_3);
-        RESUME_4 = new Resume(UUID_4);
+        RESUME_1 = new Resume(UUID_1, "fullName1");
+        RESUME_2 = new Resume(UUID_2, "fullName2");
+        RESUME_3 = new Resume(UUID_3, "fullName3");
+        RESUME_4 = new Resume(UUID_4, "fullName4");
 
-        RESUMES = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
+        RESUMES = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
     }
 
     protected AbstractStorageTest(Storage storage) {
@@ -57,7 +61,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "fullNameNew");
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID_1));
     }
@@ -68,10 +72,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
-        Resume[] array = storage.getAll();
-        assertEquals(3, array.length);
-        assertArrayEquals(RESUMES, array);
+    public void getAllSorted() throws Exception {
+        List<Resume> list = storage.getAllSorted();
+        assertEquals(3, list.size());
+        assertEquals(RESUMES, list);
     }
 
     @Test

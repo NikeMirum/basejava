@@ -13,20 +13,18 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public Resume[] getAll() {
-        // https://stackoverflow.com/a/2745351
-        return storage.toArray(new Resume[storage.size()]);
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
 
     @Override
     protected Integer getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return storage.indexOf(searchKey);
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -51,6 +49,11 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected boolean isSearchKeyExist(Integer index) {
-        return index != -1;
+        return index != null;
+    }
+
+    @Override
+    protected List<Resume> getAllElements() {
+        return new ArrayList<>(storage);
     }
 }
