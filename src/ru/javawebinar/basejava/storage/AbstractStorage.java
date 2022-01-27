@@ -5,7 +5,6 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractStorage<SK> implements Storage {
 
@@ -31,7 +30,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     public List<Resume> getAllSorted() {
         List<Resume> resumeList = getAllElements();
-        return resumeList.stream().sorted().collect(Collectors.toList());
+        return resumeList.stream().sorted().toList();
     }
 
 
