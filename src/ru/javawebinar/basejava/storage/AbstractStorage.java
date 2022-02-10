@@ -5,30 +5,39 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SK> implements Storage {
 
+    //    protected final Logger LOG = Logger.getLogger(getClass().getName());
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
+
     public void update(Resume r) {
+        LOG.info("Update " + r);
         SK searchKey = getSearchKeyIfExist(r.getUuid());
         updateElement(searchKey, r);
     }
 
     public void save(Resume r) {
+        LOG.info("Save " + r);
         SK searchKey = getSearchKeyIfNotExist(r.getUuid());
         addElement(searchKey, r);
     }
 
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         SK searchKey = getSearchKeyIfExist(uuid);
         deleteElement(searchKey);
     }
 
     public Resume get(String uuid) {
+        LOG.info("Get " + uuid);
         SK searchKey = getSearchKeyIfExist(uuid);
         return getElement(searchKey);
     }
 
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted");
         List<Resume> resumeList = getAllElements();
         return resumeList.stream().sorted().toList();
     }
@@ -37,6 +46,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     protected SK getSearchKeyIfExist(String uuid) {
         SK getSearchKey = getSearchKey(uuid);
         if (!isSearchKeyExist(getSearchKey)) {
+            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
         return getSearchKey(uuid);
@@ -45,6 +55,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     protected SK getSearchKeyIfNotExist(String uuid) {
         SK getSearchKey = getSearchKey(uuid);
         if (isSearchKeyExist(getSearchKey)) {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
         return getSearchKey(uuid);
