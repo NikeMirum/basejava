@@ -18,8 +18,8 @@ public class ResumeTestData {
         contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
         contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/");
 
-        sections.put(SectionType.OBJECTIVE, new SingleItemSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        sections.put(SectionType.PERSONAL, new SingleItemSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        sections.put(SectionType.OBJECTIVE, new SimpleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        sections.put(SectionType.PERSONAL, new SimpleLineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievements = new LinkedList<>();
         achievements.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -28,7 +28,7 @@ public class ResumeTestData {
         achievements.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        sections.put(SectionType.ACHIEVEMENT, new MultipleItemSection(achievements));
+        sections.put(SectionType.ACHIEVEMENT, new BulletedListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -46,7 +46,7 @@ public class ResumeTestData {
         qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
-        sections.put(SectionType.ACHIEVEMENT, new MultipleItemSection(qualifications));
+        sections.put(SectionType.ACHIEVEMENT, new BulletedListSection(qualifications));
 
         List<Experience> experience = new ArrayList<>();
         experience.add(new Experience("Автор проекта.",
@@ -65,7 +65,8 @@ public class ResumeTestData {
                 "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python",
                 LocalDate.of(2012, 4, 1),
                 LocalDate.of(2014, 10, 1),
-                "RIT Center"));
+                "RIT Center",
+                null));
         experience.add(new Experience("Ведущий программист",
                 "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5.",
                 LocalDate.of(2010, 12, 1),
@@ -100,43 +101,52 @@ public class ResumeTestData {
 
         List<Experience> education = new ArrayList<>();
         education.add(new Experience("\"Functional Programming Principles in Scala\" by Martin Odersky",
+                null,
                 LocalDate.of(2013, 3, 1),
                 LocalDate.of(2013, 5, 1),
                 "Coursera",
                 "https://www.coursera.org/course/progfun"));
         education.add(new Experience("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
+                null,
                 LocalDate.of(2011, 3, 1),
                 LocalDate.of(2011, 4, 1),
                 "Luxoft",
                 "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366"));
         education.add(new Experience("3 месяца обучения мобильным IN сетям (Берлин)",
+                null,
                 LocalDate.of(2005, 1, 1),
                 LocalDate.of(2005, 4, 1),
                 "Siemens AG",
                 "http://www.siemens.ru/"));
         education.add(new Experience("6 месяцев обучения цифровым телефонным сетям (Москва)",
+                null,
                 LocalDate.of(1997, 9, 1),
                 LocalDate.of(2005, 1, 1),
                 "Alcatel",
                 "http://www.alcatel.ru/"));
         education.add(new Experience("Аспирантура (программист С, С++)",
+                null,
                 LocalDate.of(1993, 9, 1),
                 LocalDate.of(1996, 7, 1),
                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "http://www.ifmo.ru/"));
         education.add(new Experience("Инженер (программист Fortran, C)",
+                null,
                 LocalDate.of(1987, 9, 1),
                 LocalDate.of(1993, 7, 1),
                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "http://www.ifmo.ru/"));
         education.add(new Experience("Закончил с отличием",
+                null,
                 LocalDate.of(1984, 9, 1),
                 LocalDate.of(1987, 6, 1),
                 "Заочная физико-техническая школа при МФТИ",
                 "http://www.school.mipt.ru/"));
         sections.put(SectionType.EDUCATION, new OrganizationSection(education));
 
-        Resume test = new Resume("Григорий Кислин", contacts, sections);
+        Resume test = new Resume("Григорий Кислин");
+        test.setContacts(contacts);
+        test.setSections(sections);
         System.out.println(test);
     }
 }

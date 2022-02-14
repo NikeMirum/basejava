@@ -12,25 +12,10 @@ public class Experience {
     private String organization;
     private String hyperLink;
 
-    public Experience(String title, String description, LocalDate beginDate, LocalDate endDate, String organization, String hyperLink) {
+    public Experience(String title, String description, LocalDate beginDate, LocalDate endDate, String organization,
+                      String hyperLink) {
         this.title = title;
         this.description = description;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
-        this.organization = organization;
-        this.hyperLink = hyperLink;
-    }
-
-    public Experience(String title, String description, LocalDate beginDate, LocalDate endDate, String organization) {
-        this.title = title;
-        this.description = description;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
-        this.organization = organization;
-    }
-
-    public Experience(String title, LocalDate beginDate, LocalDate endDate, String organization, String hyperLink) {
-        this.title = title;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.organization = organization;
@@ -42,7 +27,9 @@ public class Experience {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Experience that = (Experience) o;
-        return title.equals(that.title) && Objects.equals(description, that.description) && beginDate.equals(that.beginDate) && Objects.equals(endDate, that.endDate) && organization.equals(that.organization) && Objects.equals(hyperLink, that.hyperLink);
+        return title.equals(that.title) && Objects.equals(description, that.description)
+                && beginDate.equals(that.beginDate) && Objects.equals(endDate, that.endDate)
+                && organization.equals(that.organization) && Objects.equals(hyperLink, that.hyperLink);
     }
 
     @Override
