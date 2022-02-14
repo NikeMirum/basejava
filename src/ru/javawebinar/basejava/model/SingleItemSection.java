@@ -11,4 +11,11 @@ public class SingleItemSection extends AbstractSection{
     public String getItem() {
         return item;
     }
+
+    @Override
+    public String toString() {
+        return "SingleItemSection{" +
+                "item='" + item + '\'' +
+                '}';
+    }
 }

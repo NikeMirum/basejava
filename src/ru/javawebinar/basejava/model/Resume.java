@@ -13,13 +13,23 @@ public class Resume implements Comparable<Resume> {
     private final String uuid;
     private String fullName;
     private Map<ContactType, String> contacts;
-    private Map<SectionType, String> sections;
+    private Map<SectionType, AbstractSection> sections;
 
-    public Resume(String fullName, Map<ContactType, String> contacts, Map<SectionType, String> sections) {
+    //Resume for previous old version Resume tests
+    public Resume(String uuid, String fullName){
+        this(uuid, fullName, null, null);
+    }
+
+    //Resume for Reflection tests
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
+    }
+
+    public Resume(String fullName, Map<ContactType, String> contacts, Map<SectionType, AbstractSection> sections) {
         this(UUID.randomUUID().toString(), fullName, contacts, sections);
     }
 
-    public Resume(String uuid, String fullName, Map<ContactType, String> contacts, Map<SectionType, String> sections) {
+    public Resume(String uuid, String fullName, Map<ContactType, String> contacts, Map<SectionType, AbstractSection> sections) {
         this.uuid = uuid;
         this.fullName = fullName;
         this.contacts = contacts;
@@ -38,7 +48,7 @@ public class Resume implements Comparable<Resume> {
         return contacts;
     }
 
-    public Map<SectionType, String> getSections() {
+    public Map<SectionType, AbstractSection> getSections() {
         return sections;
     }
 

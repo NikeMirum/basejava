@@ -13,4 +13,11 @@ public class OrganizationSection extends AbstractSection {
     public List<Experience> getItems() {
         return items;
     }
+
+    @Override
+    public String toString() {
+        return "OrganizationSection{" +
+                "items=" + items +
+                '}';
+    }
 }
