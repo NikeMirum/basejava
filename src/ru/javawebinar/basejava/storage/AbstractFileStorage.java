@@ -46,7 +46,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void updateElement(File file, Resume r) {
         try {
-            file.createNewFile();
             doWrite(r, file);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
