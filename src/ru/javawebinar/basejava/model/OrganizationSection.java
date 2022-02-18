@@ -4,13 +4,13 @@ import java.util.List;
 
 public class OrganizationSection extends AbstractSection {
 
-    private List<Experience> items;
+    private List<Organization> items;
 
-    public OrganizationSection(List<Experience> items) {
+    public OrganizationSection(List<Organization> items) {
         this.items = items;
     }
 
-    public List<Experience> getItems() {
+    public List<Organization> getItems() {
         return items;
     }
 

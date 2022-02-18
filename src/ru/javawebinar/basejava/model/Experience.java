@@ -7,19 +7,17 @@ public class Experience {
 
     private String title;
     private String description;
-    private LocalDate beginDate;
+    private LocalDate startDate;
     private LocalDate endDate;
-    private String organization;
-    private String hyperLink;
 
-    public Experience(String title, String description, LocalDate beginDate, LocalDate endDate, String organization,
-                      String hyperLink) {
+    public Experience(String title, String description, LocalDate startDate, LocalDate endDate) {
+        Objects.requireNonNull(startDate, "startDate must not be null");
+        Objects.requireNonNull(endDate, "endDate must not be null");
+        Objects.requireNonNull(title, "title must not be null");
         this.title = title;
         this.description = description;
-        this.beginDate = beginDate;
+        this.startDate = startDate;
         this.endDate = endDate;
-        this.organization = organization;
-        this.hyperLink = hyperLink;
     }
 
     @Override
@@ -27,14 +25,12 @@ public class Experience {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Experience that = (Experience) o;
-        return title.equals(that.title) && Objects.equals(description, that.description)
-                && beginDate.equals(that.beginDate) && Objects.equals(endDate, that.endDate)
-                && organization.equals(that.organization) && Objects.equals(hyperLink, that.hyperLink);
+        return title.equals(that.title) && Objects.equals(description, that.description) && startDate.equals(that.startDate) && endDate.equals(that.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, beginDate, endDate, organization, hyperLink);
+        return Objects.hash(title, description, startDate, endDate);
     }
 
     @Override
@@ -42,10 +38,8 @@ public class Experience {
         return "Experience{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", beginDate=" + beginDate +
+                ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", organization='" + organization + '\'' +
-                ", hyperLink='" + hyperLink + '\'' +
                 '}';
     }
 }
