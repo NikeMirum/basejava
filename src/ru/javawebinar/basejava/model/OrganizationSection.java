@@ -4,20 +4,20 @@ import java.util.List;
 
 public class OrganizationSection extends AbstractSection {
 
-    private List<Organization> items;
+    private List<Organization> organizations;
 
-    public OrganizationSection(List<Organization> items) {
-        this.items = items;
+    public OrganizationSection(List<Organization> organizations) {
+        this.organizations = organizations;
     }
 
-    public List<Organization> getItems() {
-        return items;
+    public List<Organization> getOrganizations() {
+        return organizations;
     }
 
     @Override
     public String toString() {
         return "OrganizationSection{" +
-                "items=" + items +
+                "items=" + organizations +
                 '}';
     }
 }

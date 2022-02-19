@@ -18,16 +18,18 @@ public class FileUtil {
         }
         System.out.println(file.getName());
         File[] files = file.listFiles();
-        shiftNumbers++;
-        for (File file1 : files) {
-            if (file1.isDirectory()) {
-                handleFolder(file1);
-            } else if (file1.isFile()) {
-                handleFile(file1);
-            } else {
-                System.out.println(file1.getName() + "Undefined structure element");
+        if (files!=null) {
+            shiftNumbers++;
+            for (File file1 : files) {
+                if (file1.isDirectory()) {
+                    handleFolder(file1);
+                } else if (file1.isFile()) {
+                    handleFile(file1);
+                } else {
+                    System.out.println(file1.getName() + "Undefined structure element");
+                }
             }
+            shiftNumbers--;
         }
-        shiftNumbers--;
     }
 }

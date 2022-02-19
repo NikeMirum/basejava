@@ -37,12 +37,12 @@ public class Resume implements Comparable<Resume> {
         return contacts;
     }
 
-    public Map<SectionType, AbstractSection> getSections() {
-        return sections;
-    }
-
     public void setContacts(Map<ContactType, String> contacts) {
         this.contacts = contacts;
+    }
+
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
     }
 
     public void setSections(Map<SectionType, AbstractSection> sections) {
