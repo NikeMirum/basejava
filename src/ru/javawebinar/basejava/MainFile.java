@@ -34,6 +34,6 @@ public class MainFile {
 
         //HW08 Part2
         File projectDir = new File("./");
-        handleFolder(projectDir);
+        handleFolder(projectDir, "");
     }
 }
