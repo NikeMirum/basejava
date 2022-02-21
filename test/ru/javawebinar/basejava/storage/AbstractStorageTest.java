@@ -7,23 +7,27 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\projects\\storage");
+
+    protected Storage storage;
+
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+
     private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "fullName1");
     private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "fullName2");
     private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "fullName3");
-    private static List<Resume> RESUMES = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
     private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, "fullName4");
-    protected Storage storage;
+    private static List<Resume> RESUMES = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -52,7 +56,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1, "fullNameNew");
         storage.update(newResume);
-        assertSame(newResume, storage.get(UUID_1));
+        assertEquals(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
