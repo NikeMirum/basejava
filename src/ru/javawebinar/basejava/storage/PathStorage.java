@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.serializing.SerializingStrategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private SerializingStrategy strategy;
@@ -28,22 +30,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::deleteElement);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        getFiles().forEach(this::deleteElement);
     }
 
     @Override
     public int size() {
-        long list;
-        try {
-            list = Files.list(directory).count();
-        } catch (IOException e) {
-            throw new StorageException("Directory read error", null);
-        }
-        return (int) list;
+        return (int) getFiles().count();
     }
 
     @Override
@@ -87,18 +79,21 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void deleteElement(Path path) {
         try {
-            if (!Files.deleteIfExists(path)) {
-                throw new StorageException("Path delete error", path.getFileName().toString());
-            }
+            Files.delete(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new StorageException("Path delete error", path.getFileName().toString());
         }
     }
 
     @Override
     protected List<Resume> getAllElements() {
+        return getFiles().map(this::getElement).collect(Collectors.toList());
+    }
+
+
+    private Stream<Path> getFiles() {
         try {
-            return Files.list(directory).map(this::getElement).collect(Collectors.toList());
+            return Files.list(directory);
         } catch (IOException e) {
             throw new StorageException("Directory read error", null);
         }
