@@ -5,7 +5,7 @@ import java.io.File;
 public class FileUtil {
 
     public static void handleFile(File file, String shift) {
-        System.out.print(shift);
+        System.out.print(shift + " ");
         System.out.println(file.getName() + " - " + file.length() + " bytes");
     }
 
