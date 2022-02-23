@@ -32,7 +32,7 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        //HW08 Part2
+        //HW8-HW9:
         File projectDir = new File("./");
         handleFolder(projectDir, "");
     }
