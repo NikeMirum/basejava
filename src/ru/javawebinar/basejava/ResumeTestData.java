@@ -8,31 +8,30 @@ import java.util.*;
 public class ResumeTestData {
 
     public static Resume createResume(String uuid, String fullName) {
-        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-        Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+        Resume result = new Resume(uuid, fullName);
 
-        contacts.put(ContactType.PHONE_NUMBER, "79112223344");
-        contacts.put(ContactType.SKYPE, "skype");
-        contacts.put(ContactType.EMAIL, "mail@yandex.ru");
-        contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/linkedin");
-        contacts.put(ContactType.GITHUB, "https://github.com/github");
-        contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/stackoverflow");
-        contacts.put(ContactType.HOMEPAGE, "http://homepage.ru/");
+        result.addContact(ContactType.PHONE_NUMBER, "79112223344");
+        result.addContact(ContactType.SKYPE, "skype");
+        result.addContact(ContactType.EMAIL, "mail@yandex.ru");
+        result.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/linkedin");
+        result.addContact(ContactType.GITHUB, "https://github.com/github");
+        result.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/stackoverflow");
+        result.addContact(ContactType.HOMEPAGE, "http://homepage.ru/");
 
-        sections.put(SectionType.OBJECTIVE, new TextSection("Objective"));
-        sections.put(SectionType.PERSONAL, new TextSection("Personal"));
+        result.addSection(SectionType.OBJECTIVE, new TextSection("Objective"));
+        result.addSection(SectionType.PERSONAL, new TextSection("Personal"));
 
         List<String> achievements = new LinkedList<>();
         achievements.add("Achievement1");
         achievements.add("Achievement2");
         achievements.add("Achievement3");
-        sections.put(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        result.addSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("Qualification1");
         qualifications.add("Qualification2");
         qualifications.add("Qualification3");
-        sections.put(SectionType.ACHIEVEMENT, new ListSection(qualifications));
+        result.addSection(SectionType.ACHIEVEMENT, new ListSection(qualifications));
 
         List<Organization> organization = new ArrayList<>();
         organization.add(new Organization("Organization1",
@@ -53,7 +52,7 @@ public class ResumeTestData {
                         DateUtil.of(2016, 1),
                         "java-developer3",
                         "develop3")));
-        sections.put(SectionType.EXPERIENCE, new OrganizationSection(organization));
+        result.addSection(SectionType.EXPERIENCE, new OrganizationSection(organization));
 
         List<Organization> education = new ArrayList<>();
         education.add(new Organization("education1",
@@ -72,28 +71,24 @@ public class ResumeTestData {
                         DateUtil.of(2011, 1),
                         "experience3",
                         null)));
-        sections.put(SectionType.EDUCATION, new OrganizationSection(education));
+        result.addSection(SectionType.EDUCATION, new OrganizationSection(education));
 
-        Resume result = new Resume(uuid, fullName);
-        result.setContacts(contacts);
-        result.setSections(sections);
         return result;
     }
 
     public static void main(String[] args) {
-        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-        Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+        Resume test = new Resume("Григорий Кислин");
 
-        contacts.put(ContactType.PHONE_NUMBER, "79218550482");
-        contacts.put(ContactType.SKYPE, "grigory.kislin");
-        contacts.put(ContactType.EMAIL, "gkislin@yandex.ru");
-        contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-        contacts.put(ContactType.GITHUB, "https://github.com/gkislin");
-        contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
-        contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/");
+        test.addContact(ContactType.PHONE_NUMBER, "79218550482");
+        test.addContact(ContactType.SKYPE, "grigory.kislin");
+        test.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        test.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        test.addContact(ContactType.GITHUB, "https://github.com/gkislin");
+        test.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
+        test.addContact(ContactType.HOMEPAGE, "http://gkislin.ru/");
 
-        sections.put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        sections.put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        test.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        test.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievements = new LinkedList<>();
         achievements.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -102,7 +97,7 @@ public class ResumeTestData {
         achievements.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievements.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        sections.put(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        test.addSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
         List<String> qualifications = new ArrayList<>();
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -120,7 +115,7 @@ public class ResumeTestData {
         qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
-        sections.put(SectionType.ACHIEVEMENT, new ListSection(qualifications));
+        test.addSection(SectionType.ACHIEVEMENT, new ListSection(qualifications));
 
         List<Organization> organization = new ArrayList<>();
         organization.add(new Organization("Java Online Projects",
@@ -171,7 +166,7 @@ public class ResumeTestData {
                         DateUtil.of(2005, 1),
                         "Инженер по аппаратному и программному тестированию",
                         "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).")));
-        sections.put(SectionType.EXPERIENCE, new OrganizationSection(organization));
+        test.addSection(SectionType.EXPERIENCE, new OrganizationSection(organization));
 
         List<Organization> education = new ArrayList<>();
         education.add(new Organization("Coursera",
@@ -214,11 +209,8 @@ public class ResumeTestData {
                         DateUtil.of(1987, 6),
                         "Закончил с отличием",
                         null)));
-        sections.put(SectionType.EDUCATION, new OrganizationSection(education));
+        test.addSection(SectionType.EDUCATION, new OrganizationSection(education));
 
-        Resume test = new Resume("Григорий Кислин");
-        test.setContacts(contacts);
-        test.setSections(sections);
         System.out.println(test);
     }
 }

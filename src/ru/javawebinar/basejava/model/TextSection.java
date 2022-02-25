@@ -3,22 +3,26 @@ package ru.javawebinar.basejava.model;
 import java.util.Objects;
 
 public class TextSection extends AbstractSection {
+
     private static final long serialVersionUID = 1L;
 
-    private final String text;
+    private String content;
 
-    public TextSection(String text) {
-        Objects.requireNonNull(text, "content must not be null");
-        this.text = text;
+    public TextSection() {
     }
 
-    public String getText() {
-        return text;
+    public TextSection(String content) {
+        Objects.requireNonNull(content, "content must not be null");
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     @Override
     public String toString() {
-        return text;
+        return content;
     }
 
     @Override
@@ -28,12 +32,12 @@ public class TextSection extends AbstractSection {
 
         TextSection that = (TextSection) o;
 
-        return text.equals(that.text);
+        return content.equals(that.content);
 
     }
 
     @Override
     public int hashCode() {
-        return text.hashCode();
+        return content.hashCode();
     }
 }
