@@ -67,55 +67,47 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            int size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-            }
-            int contactsSize = dis.readInt();
-            for (int i = 0; i < contactsSize; i++) {
+            readWithException(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readWithException(dis, () -> {
                 SectionType type = SectionType.valueOf(dis.readUTF());
                 switch (type) {
                     case PERSONAL:
-                    case OBJECTIVE: resume.addSection(type, new TextSection(dis.readUTF()));
-                    break;
+                    case OBJECTIVE:
+                        resume.addSection(type, new TextSection(dis.readUTF()));
+                        break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS: {
-                        int listSectionSize = dis.readInt();
-                        List<String> list = new ArrayList<>(listSectionSize);
-                        for (int j = 0; j < listSectionSize; j++) {
-                            list.add(dis.readUTF());
-                        }
-                        resume.addSection(type, new ListSection(list));
+                        resume.addSection(type, new ListSection(readListWithException(dis, dis::readUTF)));
+
                     }
                     break;
                     case EXPERIENCE:
                     case EDUCATION: {
-                        int organizationsSize = dis.readInt();
-                        List<Organization> organizations = new ArrayList<>(organizationsSize);
-                        for (int j = 0; j < organizationsSize; j++) {
-                            String name = dis.readUTF();
-                            String url = dis.readUTF();
-                            Link link = new Link(name, (url.equals(" ")) ? null : url);
-                            List<Organization.Position> positions = new ArrayList<>();
-                            int positionSize = dis.readInt();
-                            for (int k = 0; k < positionSize; k++) {
-                                LocalDate startDate = readLocalDate(dis);
-                                LocalDate endDate = readLocalDate(dis);
-                                String title = dis.readUTF();
-                                String description = dis.readUTF();
-                                Organization.Position position = new Organization.Position(startDate, endDate, title,
-                                        description.equals(" ") ? null : description);
-                                positions.add(position);
-                            }
-                            organizations.add(new Organization(link, positions));
-                        }
-                        resume.addSection(type, new OrganizationSection(organizations));
+                        resume.addSection(type, new OrganizationSection(
+                                readListWithException(dis, () -> new Organization(readLink(dis),
+                                        readListWithException(dis, () ->
+                                                readPosition(dis))
+                                ))));
                     }
                     break;
                 }
-            }
+            });
             return resume;
         }
+    }
+
+    private Link readLink(DataInputStream dis) throws IOException {
+        String name = dis.readUTF();
+        String url = dis.readUTF();
+        return new Link(name, (url.equals(" ")) ? null : url);
+    }
+
+    private Organization.Position readPosition(DataInputStream dis) throws IOException {
+        LocalDate startDate = readLocalDate(dis);
+        LocalDate endDate = readLocalDate(dis);
+        String title = dis.readUTF();
+        String description = dis.readUTF();
+        return new Organization.Position(startDate, endDate, title, description.equals(" ") ? null : description);
     }
 
     private void writeLocalDate(DataOutputStream dos, LocalDate localDate) throws IOException {
@@ -127,13 +119,37 @@ public class DataStreamSerializer implements StreamSerializer {
         return LocalDate.of(dis.readInt(), dis.readInt(), 1);
     }
 
+    private void readWithException(DataInputStream dis, ElementReader er)
+            throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            er.read();
+        }
+    }
 
-    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, ElementWriter<T> er)
+    private <T> List<T> readListWithException(DataInputStream dis, ListReader<T> lr) throws IOException {
+        int size = dis.readInt();
+        List<T> list = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(lr.read());
+        }
+        return list;
+    }
+
+    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, ElementWriter<T> ew)
             throws IOException {
         dos.writeInt(collection.size());
         for (T t : collection) {
-            er.write(t);
+            ew.write(t);
         }
+    }
+
+    private interface ElementReader {
+        void read() throws IOException;
+    }
+
+    private interface ListReader<T> {
+        T read() throws IOException;
     }
 
     private interface ElementWriter<T> {
