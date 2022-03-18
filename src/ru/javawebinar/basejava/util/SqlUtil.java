@@ -7,8 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class SqlUtil {
+    private final ConnectionFactory cf;
 
-    public static <T> T execute(ConnectionFactory cf, String sqlStatement, SqlExecutor<T> executor) {
+    public SqlUtil(ConnectionFactory cf) {
+        this.cf = cf;
+    }
+
+    public <T> T execute(String sqlStatement, SqlExecutor<T> executor) {
         try (Connection conn = cf.getConnection();
              PreparedStatement ps = conn.prepareStatement(sqlStatement)) {
             return executor.execute(ps);
@@ -17,8 +22,8 @@ public class SqlUtil {
         }
     }
 
-    public static void execute(ConnectionFactory cf, String sqlStatement) {
-        execute(cf, sqlStatement, PreparedStatement::execute);
+    public void execute(String sqlStatement) {
+        execute(sqlStatement, PreparedStatement::execute);
     }
 
     public interface SqlExecutor<T> {
