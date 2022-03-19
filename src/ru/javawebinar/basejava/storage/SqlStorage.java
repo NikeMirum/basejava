@@ -35,7 +35,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        sqlUtil.<Void>execute("UPDATE resume SET full_name = ? WHERE uuid = ?", ps -> {
+        sqlUtil.execute("UPDATE resume SET full_name = ? WHERE uuid = ?", ps -> {
             String uuid = r.getUuid();
             ps.setString(1, r.getFullName());
             ps.setString(2, uuid);
@@ -48,7 +48,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        sqlUtil.<Void>execute("INSERT INTO resume (uuid, full_name) VALUES (?,?)", ps -> {
+        sqlUtil.execute("INSERT INTO resume (uuid, full_name) VALUES (?,?)", ps -> {
             ps.setString(1, r.getUuid());
             ps.setString(2, r.getFullName());
             if (ps.executeUpdate() == 0) {
@@ -60,7 +60,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        sqlUtil.<Void>execute("DELETE FROM resume WHERE uuid=?", ps -> {
+        sqlUtil.execute("DELETE FROM resume WHERE uuid=?", ps -> {
             ps.setString(1, uuid);
             if (ps.executeUpdate() == 0) {
                 throw new NotExistStorageException(uuid);
