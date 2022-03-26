@@ -12,14 +12,14 @@ public class ResumeTestData {
     public static Resume createResume(String uuid, String fullName) {
         Resume result = new Resume(uuid, fullName);
 
-//        result.addContact(ContactType.PHONE_NUMBER, "79112223344");
-//        result.addContact(ContactType.SKYPE, "skype");
-//        result.addContact(ContactType.EMAIL, "mail@yandex.ru");
-//        result.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/linkedin");
-//        result.addContact(ContactType.GITHUB, "https://github.com/github");
-//        result.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/stackoverflow");
-//        result.addContact(ContactType.HOMEPAGE, "http://homepage.ru/");
-//
+        result.addContact(ContactType.PHONE_NUMBER, "79112223344");
+        result.addContact(ContactType.SKYPE, "skype");
+        result.addContact(ContactType.EMAIL, "mail@yandex.ru");
+        result.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/linkedin");
+        result.addContact(ContactType.GITHUB, "https://github.com/github");
+        result.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/stackoverflow");
+        result.addContact(ContactType.HOMEPAGE, "http://homepage.ru/");
+
 //        result.addSection(SectionType.OBJECTIVE, new TextSection("Objective"));
 //        result.addSection(SectionType.PERSONAL, new TextSection("Personal"));
 //
