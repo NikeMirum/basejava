@@ -20,21 +20,21 @@ public class ResumeTestData {
         result.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/stackoverflow");
         result.addContact(ContactType.HOMEPAGE, "http://homepage.ru/");
 
-//        result.addSection(SectionType.OBJECTIVE, new TextSection("Objective"));
-//        result.addSection(SectionType.PERSONAL, new TextSection("Personal"));
-//
-//        List<String> achievements = new LinkedList<>();
-//        achievements.add("Achievement1");
-//        achievements.add("Achievement2");
-//        achievements.add("Achievement3");
-//        result.addSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
-//
-//        List<String> qualifications = new ArrayList<>();
-//        qualifications.add("Qualification1");
-//        qualifications.add("Qualification2");
-//        qualifications.add("Qualification3");
-//        result.addSection(SectionType.ACHIEVEMENT, new ListSection(qualifications));
-//
+        result.addSection(SectionType.OBJECTIVE, new TextSection("Objective"));
+        result.addSection(SectionType.PERSONAL, new TextSection("Personal"));
+
+        List<String> achievements = new LinkedList<>();
+        achievements.add("Achievement1");
+        achievements.add("Achievement2");
+        achievements.add("Achievement3");
+        result.addSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
+
+        List<String> qualifications = new ArrayList<>();
+        qualifications.add("Qualification1");
+        qualifications.add("Qualification2");
+        qualifications.add("Qualification3");
+        result.addSection(SectionType.ACHIEVEMENT, new ListSection(qualifications));
+
 //        List<Organization> organization = new ArrayList<>();
 //        organization.add(new Organization("Organization1",
 //                "https://www.organization1.com/",
