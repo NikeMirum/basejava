@@ -181,16 +181,15 @@ public class SqlStorage implements Storage {
     }
 
     private void deleteContacts(String uuid, Connection conn) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement("" +
-                "DELETE FROM contact WHERE resume_uuid = ?")) {
-            ps.setString(1, uuid);
-            ps.execute();
-        }
+        deleteAttributes(conn, uuid, "DELETE  FROM contact WHERE resume_uuid=?");
     }
 
     private void deleteSections(String uuid, Connection conn) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement("" +
-                "DELETE FROM section WHERE resume_uuid = ?")) {
+        deleteAttributes(conn, uuid, "DELETE  FROM section WHERE resume_uuid=?");
+    }
+
+    private void deleteAttributes(Connection conn, String uuid, String sql) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, uuid);
             ps.execute();
         }

@@ -1,7 +1,6 @@
-package ru.javawebinar.basejava;
+package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.MapUuidStorage;
 
 /**
  * Test ru.javawebinar.basejava.storage.ArrayStorage
