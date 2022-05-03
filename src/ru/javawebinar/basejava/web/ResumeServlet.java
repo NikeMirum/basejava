@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.web;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.storage.Storage;
+import ru.javawebinar.basejava.util.DateUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
 
@@ -25,9 +28,9 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        final boolean isNewe = (uuid == null || uuid.length() == 0);
+        final boolean isNew = (uuid == null || uuid.length() == 0);
         Resume r;
-        if (isNewe) {
+        if (isNew) {
             r = new Resume(fullName);
         } else {
             r = storage.get(uuid);
@@ -56,10 +59,33 @@ public class ResumeServlet extends HttpServlet {
                     case QUALIFICATIONS:
                         r.addSection(type, new ListSection(value.split("\\n")));
                         break;
+                    case EDUCATION:
+                    case EXPERIENCE:
+                        List<Organization> orgs = new ArrayList<>();
+                        String[] urls = request.getParameterValues(type.name() + "url");
+                        for (int i = 0; i < values.length; i++) {
+                            String name = values[i];
+                            if (!isEmpty(name)) {
+                                List<Organization.Position> positions = new ArrayList<>();
+                                String pfx = type.name() + i;
+                                String[] startDates = request.getParameterValues(pfx + "startDate");
+                                String[] endDates = request.getParameterValues(pfx + "endDate");
+                                String[] titles = request.getParameterValues(pfx + "title");
+                                String[] descriptions = request.getParameterValues(pfx + "description");
+                                for (int j = 0; j < titles.length; j++) {
+                                    if (!isEmpty(titles[j])) {
+                                        positions.add(new Organization.Position(DateUtil.parse(startDates[j]), DateUtil.parse(endDates[j]), titles[j], descriptions[j]));
+                                    }
+                                }
+                                orgs.add(new Organization(new Link(name, urls[i]), positions));
+                            }
+                        }
+                        r.addSection(type, new OrganizationSection(orgs));
+                        break;
                 }
             }
         }
-        if (isNewe) {
+        if (isNew) {
             storage.save(r);
         } else {
             storage.update(r);
@@ -84,6 +110,9 @@ public class ResumeServlet extends HttpServlet {
             case "view":
                 r = storage.get(uuid);
                 break;
+            case "add":
+                r = Resume.EMPTY;
+                break;
             case "edit":
                 r = storage.get(uuid);
                 for (SectionType type : SectionType.values()) {
@@ -101,12 +130,24 @@ public class ResumeServlet extends HttpServlet {
                                 section = ListSection.EMPTY;
                             }
                             break;
+                        case EXPERIENCE:
+                        case EDUCATION:
+                            OrganizationSection orgSection = (OrganizationSection) section;
+                            List<Organization> emptyFirstOrganizations = new ArrayList<>();
+                            emptyFirstOrganizations.add(Organization.EMPTY);
+                            if (orgSection != null) {
+                                for (Organization organization : orgSection.getOrganizations()) {
+                                    List<Organization.Position> emptyFirstPositions = new ArrayList<>();
+                                    emptyFirstPositions.add(Organization.Position.EMPTY);
+                                    emptyFirstPositions.addAll(organization.getPositions());
+                                    emptyFirstOrganizations.add(new Organization(organization.getHomePage(), emptyFirstPositions));
+                                }
+                            }
+                            section = new OrganizationSection(emptyFirstOrganizations);
+                            break;
                     }
                     r.addSection(type, section);
                 }
-                break;
-            case "add":
-                r = Resume.EMPTY;
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");

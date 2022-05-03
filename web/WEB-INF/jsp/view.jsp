@@ -31,7 +31,7 @@
             <c:set var="section" value="${sectionEntry.value}"/>
             <jsp:useBean id="section" type="ru.javawebinar.basejava.model.AbstractSection"/>
             <tr>
-                <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
+                <td colspan="2"><h3><a name="type.name">${type.title}</a></h3></td>
             </tr>
             <c:choose>
                 <c:when test="${type=='OBJECTIVE'}">
