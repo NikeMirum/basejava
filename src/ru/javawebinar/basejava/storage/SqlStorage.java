@@ -70,7 +70,7 @@ public class SqlStorage implements Storage {
             String uuid = r.getUuid();
             try (PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name = ? WHERE uuid = ?")) {
                 ps.setString(1, r.getFullName());
-                ps.setString(2, r.getUuid());
+                ps.setString(2, uuid);
                 if (ps.executeUpdate() != 1) {
                     throw new NotExistStorageException(uuid);
                 }
@@ -195,18 +195,18 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void addContact(ResultSet rs, Resume resume) throws SQLException {
+    private void addContact(ResultSet rs, Resume r) throws SQLException {
         String value = rs.getString("value");
         if (value != null) {
-            resume.addContact(ContactType.valueOf(rs.getString("type")), value);
+            r.addContact(ContactType.valueOf(rs.getString("type")), value);
         }
     }
 
-    private void addSection(ResultSet rs, Resume resume) throws SQLException {
+    private void addSection(ResultSet rs, Resume r) throws SQLException {
         String content = rs.getString("content");
         if (content != null) {
             SectionType type = SectionType.valueOf(rs.getString("type"));
-            resume.addSection(type, JsonParser.read(content, AbstractSection.class));
+            r.addSection(type, JsonParser.read(content, AbstractSection.class));
         }
     }
 }

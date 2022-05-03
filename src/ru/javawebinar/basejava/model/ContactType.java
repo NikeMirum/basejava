@@ -1,14 +1,14 @@
 package ru.javawebinar.basejava.model;
 
 public enum ContactType {
-    PHONE_NUMBER("Тел.:"),
-    SKYPE("Skype:") {
+    PHONE_NUMBER("Тел."),
+    SKYPE("Skype") {
         @Override
         public String toHtml0(String value) {
             return getTitle() + ": " + toLink("skype:" + value, value);
         }
     },
-    EMAIL("Почта:") {
+    EMAIL("Почта") {
         @Override
         public String toHtml0(String value) {
             return getTitle() + ": " + toLink("mailto:" + value, value);

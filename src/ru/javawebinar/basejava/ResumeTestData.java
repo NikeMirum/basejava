@@ -33,47 +33,47 @@ public class ResumeTestData {
         qualifications.add("Qualification1");
         qualifications.add("Qualification2");
         qualifications.add("Qualification3");
-        result.addSection(SectionType.ACHIEVEMENT, new ListSection(qualifications));
+        result.addSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
-//        List<Organization> organization = new ArrayList<>();
-//        organization.add(new Organization("Organization1",
-//                "https://www.organization1.com/",
-//                new Organization.Position(DateUtil.of(2021, 1),
-//                        DateUtil.NOW,
-//                        "java-developer1",
-//                        "develop1")));
-//        organization.add(new Organization("Organization2",
-//                "https://www.organization2.com/",
-//                new Organization.Position(DateUtil.of(2016, 1),
-//                        DateUtil.of(2021, 1),
-//                        "java-developer2",
-//                        "develop2")));
-//        organization.add(new Organization("Organization3",
-//                null,
-//                new Organization.Position(DateUtil.of(2011, 1),
-//                        DateUtil.of(2016, 1),
-//                        "java-developer3",
-//                        "develop3")));
-//        result.addSection(SectionType.EXPERIENCE, new OrganizationSection(organization));
-//
-//        List<Organization> education = new ArrayList<>();
-//        education.add(new Organization("education1",
-//                "https://www.education1.org/course/",
-//                new Organization.Position(DateUtil.of(2021, 1),
-//                        DateUtil.NOW,
-//                        "experience1",
-//                        null)));
-//        education.add(new Organization("education2",
-//                "http://www.education2.ru/",
-//                new Organization.Position(DateUtil.of(2006, 1),
-//                        DateUtil.of(2011, 1),
-//                        "experience2",
-//                        null),
-//                new Organization.Position(DateUtil.of(2001, 1),
-//                        DateUtil.of(2011, 1),
-//                        "experience3",
-//                        null)));
-//        result.addSection(SectionType.EDUCATION, new OrganizationSection(education));
+        List<Organization> organization = new ArrayList<>();
+        organization.add(new Organization("Organization1",
+                "https://www.organization1.com/",
+                new Organization.Position(DateUtil.of(2021, 1),
+                        DateUtil.NOW,
+                        "java-developer1",
+                        "develop1")));
+        organization.add(new Organization("Organization2",
+                "https://www.organization2.com/",
+                new Organization.Position(DateUtil.of(2016, 1),
+                        DateUtil.of(2021, 1),
+                        "java-developer2",
+                        "develop2")));
+        organization.add(new Organization("Organization3",
+                null,
+                new Organization.Position(DateUtil.of(2011, 1),
+                        DateUtil.of(2016, 1),
+                        "java-developer3",
+                        "develop3")));
+        result.addSection(SectionType.EXPERIENCE, new OrganizationSection(organization));
+
+        List<Organization> education = new ArrayList<>();
+        education.add(new Organization("education1",
+                "https://www.education1.org/course/",
+                new Organization.Position(DateUtil.of(2021, 1),
+                        DateUtil.NOW,
+                        "experience1",
+                        null)));
+        education.add(new Organization("education2",
+                "http://www.education2.ru/",
+                new Organization.Position(DateUtil.of(2006, 1),
+                        DateUtil.of(2011, 1),
+                        "experience2",
+                        null),
+                new Organization.Position(DateUtil.of(2001, 1),
+                        DateUtil.of(2011, 1),
+                        "experience3",
+                        null)));
+        result.addSection(SectionType.EDUCATION, new OrganizationSection(education));
 
         return result;
     }
