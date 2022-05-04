@@ -12,13 +12,12 @@
 <jsp:include page="fragments/header.jsp"/>
 <section>
     <br>
+    <a href="resume?action=add"><img src="img/add.png"></a>
     <table border="1" cellpadding="8" cellspacing="0" style="margin: auto">
         <tr>
             <th>Имя</th>
             <th>Email</th>
-            <th>
-                <a href="resume?action=add"><img src="img/add.png"></a>
-            </th>
+            <th></th>
             <th></th>
         </tr>
         <c:forEach items="${resumes}" var="resume">

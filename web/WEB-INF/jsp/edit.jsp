@@ -19,7 +19,8 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
             <dt>Имя:</dt>
-            <dd><input type="text" name="fullName" size=55 value="${resume.fullName}"></dd>
+            <dd><input type="text" name="fullName" size=55 value="${resume.fullName}"
+                       pattern="^[^\s]+(\s.*)?$" title="Имя не может быть пустым" required></dd>
         </dl>
         <h3>Контакты:</h3>
         <c:forEach var="type" items="<%=ContactType.values()%>">
