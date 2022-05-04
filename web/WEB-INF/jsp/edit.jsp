@@ -36,7 +36,7 @@
             <h3><a>${type.title}</a></h3>
             <c:choose>
                 <c:when test="${type=='OBJECTIVE'}">
-                    <input type='text' name='${type}' size=75 value='<%=section%>'>
+                    <textarea name='${type}' cols=75 rows=1><%=section%></textarea>
                 </c:when>
                 <c:when test="${type=='PERSONAL'}">
                     <textarea name='${type}' cols=75 rows=5><%=section%></textarea>
@@ -65,14 +65,14 @@
                                     <dt>Начальная дата:</dt>
                                     <dd>
                                         <input type="text" name="${type}${counter.index}startDate" size=10
-                                               value="<%=DateUtil.format(pos.getStartDate())%>" placeholder="MM/yyyy">
+                                               value="<%=DateUtil.format(pos.getStartDate())%>" placeholder="MM.yyyy">
                                     </dd>
                                 </dl>
                                 <dl>
                                     <dt>Конечная дата:</dt>
                                     <dd>
                                         <input type="text" name="${type}${counter.index}endDate" size=10
-                                               value="<%=DateUtil.format(pos.getEndDate())%>" placeholder="MM/yyyy">
+                                               value="<%=DateUtil.format(pos.getEndDate())%>" placeholder="MM.yyyy">
                                 </dl>
                                 <dl>
                                     <dt>Должность:</dt>
@@ -91,7 +91,7 @@
             </c:choose>
         </c:forEach>
         <button type="submit">Сохранить</button>
-        <button onclick="window.history.back()">Отменить</button>
+        <button type="reset" onclick="window.history.back()">Отменить</button>
     </form>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
